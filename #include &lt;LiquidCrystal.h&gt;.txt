@@ -1,0 +1,88 @@
+#include &lt;LiquidCrystal.h&gt;
+#include &lt;DHT.h&gt;
+
+// Define o pino 2 do arduino como o do sensor DHT22
+#define DHT_PIN 2
+
+// Define o modelo do sensor DHT
+#define DHTTYPE DHT22
+
+// Define os pinos a serem usados pelo display LCD
+#define RS 12
+#define EN 11
+#define D4  4
+#define D5  5
+#define D6  6
+#define D7  7
+
+// Define um parâmetro com valor 5000
+#define INTERVALO 5000
+
+// Cria um objeto para o sensor DHT22 e para o DIsplay LCD
+LiquidCrystal lcd(RS, EN, D4, D5, D6, D7);
+DHT dht(DHT_PIN, DHTTYPE);
+
+// Função executada apenas uma vez durante o funcionamento
+void setup() {
+  // Inicializa a serial do arduino e printa a mensagem
+  Serial.begin(9600);
+  Serial.println("INICIANDO SISTEMA");
+  dht.begin();
+
+  // Inicia o Display e limpa todos os caracteres
+  lcd.begin(16, 2);
+  lcd.clear();
+
+  // Posiciona o ponteiro na segunda coluna, primeira linha do display
+  lcd.setCursor(2, 0); 
+  
+  // Apresenta a mensagem no display LCD.
+  lcd.print("INIT SYSTEM"); 
+  // Espera por 3 segundos 
+  delay(3000);
+}
+
+//Função que fica em loop durante a execução do programa
+void loop() {
+
+  // Cria variáveis que irão receber os dados do sensor
+  float h = 0, t = 0, f = 0;
+
+  // Recebe a umidade
+  h = dht.readHumidity();
+  // Recebe a temperatura em graus Celsius
+  t = dht.readTemperature();
+  // Fórmula para converter a temperatura para graus Farenheit
+  f = dht.readTemperature(true);
+
+  // Lógica para eliminar resultados indesejados
+  if(isnan(h) || isnan(t) || t == 0 || h == 0){
+    Serial.println(F("Falha na leitura do sensor"));
+  }
+  // Se estiver tudo ok com a leitura, transmite os dados via bluetooth
+  else{
+    // Temperatura
+    Serial.print(t);
+    Serial.print(",");
+
+    // Umidade
+    Serial.print(h);
+    Serial.print(",");
+
+    // Temperatura em Farenheit
+    Serial.print(f);
+    Serial.print(",");
+    Serial.println();
+
+    // Exibe as informações no display LCD
+    lcd.clear();
+    lcd.setCursor(2, 0); 
+    lcd.print("MONITORANDO");  
+    lcd.setCursor(0, 1); 
+    lcd.print(t);
+    lcd.print("C  ");
+    lcd.print(h);
+    lcd.print("%RH  ");
+  }
+  // Espera o intervalo definido para fazer a próxima leitura
+  delay(INTERVALO);  
