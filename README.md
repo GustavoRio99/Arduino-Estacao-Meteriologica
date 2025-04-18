@@ -1,5 +1,9 @@
 # Arduino-Estacao-Meteriologica
 Link: https://docs.google.com/presentation/d/1h5oAJYEwYxNBGxTsSgui4nwB8MQGl9fe/edit?usp=sharing&ouid=113856263044661163022&rtpof=true&sd=true Portifolio de Evidencias
+
+"Atenção: Para visualizar os vídeos evidenciais contidos na apresentação, é necessário baixar o arquivo da apresentacao e executá-los clicando diretamente sobre os vídeos."
+
+
 Projeto automacao comercial / Industrial Extencionista
 
 É com grande satisfação que estou aqui hoje para apresentar o resultado do meu projeto universitário extensionista. Durante esse período, desenvolvi uma estação meteorológica minimalista com o objetivo de representar a importância dos sensores aplicados à automação. Nesta apresentação, abordarei o processo de criação da estação, as tecnologias utilizadas e as possíveis aplicações práticas dessa solução.​
